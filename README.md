@@ -3,3 +3,8 @@ AMQP (Advanced Message Queuing Protocol) is an open-standard messaging protocol 
 
 b. What does it mean? guest:guest@localhost:5672 , what is the first guest, and what is the second guest, and what is localhost:5672 is for?
 The connection string "amqp://guest:guest@localhost:5672" specifies an AMQP (Advanced Message Queuing Protocol) connection to a RabbitMQ server where the first guest is the default username, the second guest is the default password (both commonly used in development), localhost indicates the broker is running on the local machine, and 5672 is the default AMQP port for messaging; this setup is typical for local development but should be replaced with secure credentials and a proper host in production environments.
+
+# Reflection and Running at least three subscribers
+By running five subscriber consoles concurrently, RabbitMQ was able to distribute the workload more efficiently. This is reflected in the message rate chart, where we observe a short spike in delivery and acknowledgement, followed by an immediate drop in the queue size. Since the subscribers consume messages almost simultaneously, queued messages do not accumulate for long. This demonstrates how scaling the number of consumers helps handle incoming message bursts quickly, minimizing delay and ensuring responsiveness even under load.
+
+![Reflection and Running at least three subscribers](static/images/banyak.png)
