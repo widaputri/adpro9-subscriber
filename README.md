@@ -8,3 +8,5 @@ The connection string "amqp://guest:guest@localhost:5672" specifies an AMQP (Adv
 By running five subscriber consoles concurrently, RabbitMQ was able to distribute the workload more efficiently. This is reflected in the message rate chart, where we observe a short spike in delivery and acknowledgement, followed by an immediate drop in the queue size. Since the subscribers consume messages almost simultaneously, queued messages do not accumulate for long. This demonstrates how scaling the number of consumers helps handle incoming message bursts quickly, minimizing delay and ensuring responsiveness even under load.
 
 ![Reflection and Running at least three subscribers](static/images/banyak.png)
+
+Regarding improvemnt, the subscriber's main loop is an empty infinite loop which wastes CPU resources. Instead, it should use a signal handler or channel to gracefully shut down instead. Both programs lack error handling for the publish_event calls and proper cleanup on program termination. The queue properties in the subscriber are explicitly set but not optimized for production use (durable should be true for message persistence).
